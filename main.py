@@ -1,6 +1,8 @@
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 
+from pyautogui import typewrite
+
 import time
 
 
@@ -17,7 +19,7 @@ def logIn():
                 pas = driver.find_element_by_id("pwd")
 
                 user.send_keys("admin")
-                pas.send_keys("1")
+                pas.send_keys("admin")
 
 
                 driver.find_element_by_id("entrar").click()
@@ -42,8 +44,14 @@ def addUser(qnt_user):
 
     btn_new = driver.find_element_by_id("btn_add_visitor").click()
     time.sleep(2)
-    input_name = driver.find_element_by_id("name")
-    input_name.send_keys(str(get_lastuser.text))
+
+    typewrite("1000")
+    # input_name = driver.find_element_by_id("name")
+    # input_name.send_keys(str(get_lastuser.text))
+
+    date_picker = driver.find_element_by_id("visitor_datelimit").clear()
+    date_picker.send_keys("18/01/2026")
+    print(date_picker)
 
 
 
