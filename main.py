@@ -46,8 +46,7 @@ def addUser(qnt_user):
     time.sleep(2)
 
     typewrite("1000")
-    # input_name = driver.find_element_by_id("name")
-    # input_name.send_keys(str(get_lastuser.text))
+
 
     date_picker = driver.find_element_by_id("visitor_datelimit").clear()
     date_picker.send_keys("18/01/2026")
