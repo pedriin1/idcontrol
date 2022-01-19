@@ -2,12 +2,19 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 
 from pyautogui import typewrite
+from webdriver_manager.chrome import ChromeDriverManager
+
 
 import time
 
 
-driver = webdriver.Chrome()
-driver.get("https://localhost:30443/#/login")
+driver = webdriver.Chrome(ChromeDriverManager().install())
+
+driver.get("https://10.211.55.3:30443/#/login")
+
+time.sleep(1)
+typewrite("thisisunsafe")
+
 
 
 
@@ -26,7 +33,7 @@ def logIn():
                 time.sleep(1)
 
 
-                driver.get("https://localhost:30443/#/list_visitor")
+                driver.get("https://10.211.55.3:30443/#/list_visitor")
 
                 break
             except:
@@ -45,11 +52,21 @@ def addUser(qnt_user):
     btn_new = driver.find_element_by_id("btn_add_visitor").click()
     time.sleep(2)
 
-    typewrite("1000")
+    if get_lastuser.text:
 
 
-    date_picker = driver.find_element_by_id("visitor_datelimit").clear()
+        typewrite(get_lastuser.text)
+    else:
+        typewrite("1000")
+
+
+    driver.find_element_by_id("visitor_datelimit").clear()
+
+    date_picker = driver.find_element_by_id("visitor_datelimit")
+
     date_picker.send_keys("18/01/2026")
+    
+
     print(date_picker)
 
 
@@ -60,6 +77,8 @@ def addUser(qnt_user):
 
 
 def main():
+
+
     logIn()
     time.sleep(1)
     addUser(10)
