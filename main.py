@@ -40,10 +40,8 @@ def logIn():
                 pass
 
 
-def addGroup(users):
-    
+def addGroup():
     driver.refresh()
-    get_current_number = 1000
     driver.get(f"{LINK}/list_groups_visitors")
 
     time.sleep(2)
@@ -56,50 +54,22 @@ def addGroup(users):
     driver.execute_script("arguments[0].click();", visitors_btn)
 
     time.sleep(1)
-
     driver.find_element_by_xpath("//div[@class='portlet-title']//div[@class='actions']//a").click()
-    # driver.execute_script("arguments[0].click();", actions)
-
-
     time.sleep(1)
-        
-    
+
     try:
-        search = driver.find_element_by_xpath("//div[@class='modal-content']//div[@id='DataTables_Table_2_filter']//label//input")
-    except:
+        driver.find_element_by_xpath("//thead/tr/th[6]").click()
         time.sleep(2)
-
-        cancel_button = driver.find_element_by_xpath("//div[@class='modal-content']//div[@class='margiv-top-10']//button[@class='btn default ng-binding']")
-        driver.execute_script("arguments[0].click();", cancel_button)
-
-
-        driver.get(f"{LINK}/edit_group_visitors")
-
-        time.sleep(1)
-
-        addGroup(get_current_number)
-
-    print(users)
-
-    for user in users:
-        search.send_keys(user)
-
-        time.sleep(1)
-
-        try:
-            checkbox = driver.find_element_by_xpath("//tbody[1]/tr[1]/td[6]//label//input")
-            driver.execute_script("arguments[0].click();", checkbox)
-        except:
-            print("Checkbox not found")
-        search.clear()
-
+        driver.find_element_by_xpath("//span[@id='select_all']//a").click()
+    except:
+        pass
+        
+   
     add_btn = driver.find_element_by_xpath("//div[@class='modal-content']//div[@class='margiv-top-10']//button[@class='btn green ng-binding']")
     driver.execute_script("arguments[0].click();", add_btn)
 
-
     save_btn = driver.find_element_by_xpath("//div[@class='margiv-top-10']//button[@class='btn green ng-binding']")
     driver.execute_script("arguments[0].click();", save_btn)
-
 
 
 
@@ -176,13 +146,16 @@ def addUserContainer(times):
         addUser(str(last_user + i))
         time.sleep(1)
 
-    addGroup(LIST_ADDED_USER)
 
 
 def main():
     logIn()
-    addUserContainer(5)
-    
+    t1 = time.time()
+    addUserContainer(15)
+    addGroup()
+    t2 = time.time()
+
+    print(t2-t1)
 
 
 
