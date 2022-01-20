@@ -103,16 +103,9 @@ def addGroud(users):
 
 
 
-
-
-
-def addUser():
-
-    global LIST_ADDED_USER
+def getLastUser():
     driver.get("https://10.211.55.3:30443/#/list_visitor")
     time.sleep(1)
-    
-
 
     select = Select(driver.find_element_by_name('datatablevisitor_length'))
     select.select_by_value('10000')
@@ -124,33 +117,38 @@ def addUser():
 
     try:
 
-        last_user_number = str(int(get_lastuser.text) + 1)
+        last_user_number = int(get_lastuser.text)
     except:
-        last_user_number = "1000"
+        last_user_number = 1000
+
+    return last_user_number
+
+def addUser(last_user):
+
+    global LIST_ADDED_USER
+    #Entrando na pagina para criar o user
+
+    driver.get("https://10.211.55.3:30443/#/list_visitor")
+    time.sleep(1)
+    
     #Criando novo usuario
 
     btn_new = driver.find_element_by_id("btn_add_visitor").click()
     time.sleep(2)
 
+
+    #Digitando o nome da usuario
     name_input = driver.find_element_by_xpath("//div[@class='row form-group']//input[@id='name']")
+    name_input.send_keys(last_user)
 
-
-    if last_user_number:
-
-        name_input.send_keys(last_user_number)
-        # typewrite(last_user_number)
-    else:
-        name_input.send_keys("1000")
-
-        # typewrite("1000")
-
-
+    #Digitando a data de expiração
     driver.find_element_by_id("visitor_datelimit").clear()
     date_picker = driver.find_element_by_id("visitor_datelimit")
     date_picker.send_keys("18/01/2026")
     time.sleep(1)
-    qr_code = driver.find_element_by_xpath("//li[@id='additional']//a")
 
+    #Indo até a pagina de QR Code e gerando
+    qr_code = driver.find_element_by_xpath("//li[@id='additional']//a")
     driver.execute_script("arguments[0].click();", qr_code)
 
     generate_qr_code = driver.find_element_by_id("btn_create_qrcode")
@@ -158,21 +156,29 @@ def addUser():
 
     time.sleep(2)
 
+    #Salvando o usuario
+
     save = driver.find_element_by_id("btn_save")
     driver.execute_script("arguments[0].click();", save)
 
-    LIST_ADDED_USER.append(last_user_number)
+    LIST_ADDED_USER.append(last_user)
 
     time.sleep(1)
 
 
-def main():
-    logIn()
 
-    for i in range(5):
-        addUser()
+
+def addUserContainer(times):
+    last_user = getLastUser()
+
+    for i in range(times):
+        addUser(str(last_user + i))
         time.sleep(1)
 
+
+def main():
+    logIn()
+    addUserContainer(5)
     # time.sleep(1)
 
     # driver.refresh()
