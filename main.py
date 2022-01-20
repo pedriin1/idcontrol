@@ -132,12 +132,17 @@ def addUser():
     btn_new = driver.find_element_by_id("btn_add_visitor").click()
     time.sleep(2)
 
+    name_input = driver.find_element_by_xpath("//div[@class='row form-group']//input[@id='name']")
+
+
     if last_user_number:
 
-
-        typewrite(last_user_number)
+        name_input.send_keys(last_user_number)
+        # typewrite(last_user_number)
     else:
-        typewrite("1000")
+        name_input.send_keys("1000")
+
+        # typewrite("1000")
 
 
     driver.find_element_by_id("visitor_datelimit").clear()
@@ -164,9 +169,9 @@ def addUser():
 def main():
     logIn()
 
-    # for i in range(5):
-    #     addUser()
-    #     time.sleep(1)
+    for i in range(5):
+        addUser()
+        time.sleep(1)
 
     # time.sleep(1)
 
@@ -176,7 +181,7 @@ def main():
     # addGroud(LIST_ADDED_USER)
     # time.sleep(1)
 
-    addUser()
+    # addUser()
 
 
 
