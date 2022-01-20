@@ -3,15 +3,14 @@ from selenium.webdriver.support.ui import Select
 
 from pyautogui import typewrite
 from webdriver_manager.chrome import ChromeDriverManager
-
-
 import time
 
 
+
+LINK = "https://10.211.55.3:30443/#"
+
 driver = webdriver.Chrome(ChromeDriverManager().install())
-
-driver.get("https://10.211.55.3:30443/#/login")
-
+driver.get(f"{LINK}/login")
 typewrite("thisisunsafe")
 
 
@@ -44,12 +43,12 @@ def logIn():
 def addGroud(users):
     
     get_current_number = 1000
-    driver.get("https://10.211.55.3:30443/#/list_groups_visitors")
+    driver.get(f"{LINK}/list_groups_visitors")
 
     time.sleep(2)
 
 
-    driver.get("https://10.211.55.3:30443/#/edit_group_visitors/1001")
+    driver.get(f"{LINK}/edit_group_visitors/1001")
     time.sleep(1)
 
     visitors_btn = driver.find_element_by_xpath("//li//a[@name='departiments_tab_users']")
@@ -73,7 +72,7 @@ def addGroud(users):
         driver.execute_script("arguments[0].click();", cancel_button)
 
 
-        driver.get("https://10.211.55.3:30443/#/edit_group_visitors")
+        driver.get(f"{LINK}/edit_group_visitors")
 
         time.sleep(1)
 
@@ -104,7 +103,7 @@ def addGroud(users):
 
 
 def getLastUser():
-    driver.get("https://10.211.55.3:30443/#/list_visitor")
+    driver.get(f"{LINK}/list_visitor")
     time.sleep(1)
 
     select = Select(driver.find_element_by_name('datatablevisitor_length'))
@@ -117,18 +116,20 @@ def getLastUser():
 
     try:
 
-        last_user_number = int(get_lastuser.text)
+        last_user_number = int(get_lastuser.text) + 1
     except:
         last_user_number = 1000
 
     return last_user_number
+
+
 
 def addUser(last_user):
 
     global LIST_ADDED_USER
     #Entrando na pagina para criar o user
 
-    driver.get("https://10.211.55.3:30443/#/list_visitor")
+    driver.get(f"{LINK}/list_visitor")
     time.sleep(1)
     
     #Criando novo usuario
@@ -157,7 +158,6 @@ def addUser(last_user):
     time.sleep(2)
 
     #Salvando o usuario
-
     save = driver.find_element_by_id("btn_save")
     driver.execute_script("arguments[0].click();", save)
 
