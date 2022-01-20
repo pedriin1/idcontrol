@@ -40,8 +40,9 @@ def logIn():
                 pass
 
 
-def addGroud(users):
+def addGroup(users):
     
+    driver.refresh()
     get_current_number = 1000
     driver.get(f"{LINK}/list_groups_visitors")
 
@@ -76,7 +77,7 @@ def addGroud(users):
 
         time.sleep(1)
 
-        addGroud(get_current_number)
+        addGroup(get_current_number)
 
     print(users)
 
@@ -175,19 +176,13 @@ def addUserContainer(times):
         addUser(str(last_user + i))
         time.sleep(1)
 
+    addGroup(LIST_ADDED_USER)
+
 
 def main():
     logIn()
     addUserContainer(5)
-    # time.sleep(1)
-
-    # driver.refresh()
-    # time.sleep(1)
-
-    # addGroud(LIST_ADDED_USER)
-    # time.sleep(1)
-
-    # addUser()
+    
 
 
 
