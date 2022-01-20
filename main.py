@@ -16,6 +16,8 @@ typewrite("thisisunsafe")
 
 
 
+LIST_ADDED_USER = []
+
 
 def logIn():
     if "login" in driver.current_url:
@@ -39,7 +41,14 @@ def logIn():
                 pass
 
 
-def addGroud(lastuser):
+def addGroud(users):
+    
+    get_current_number = 1000
+    driver.get("https://10.211.55.3:30443/#/list_groups_visitors")
+
+    time.sleep(2)
+
+
     driver.get("https://10.211.55.3:30443/#/edit_group_visitors/1001")
     time.sleep(1)
 
@@ -48,20 +57,41 @@ def addGroud(lastuser):
 
     time.sleep(1)
 
-    driver.find_element_by_class_name("actions").click()
+    driver.find_element_by_xpath("//div[@class='portlet-title']//div[@class='actions']//a").click()
+    # driver.execute_script("arguments[0].click();", actions)
+
 
     time.sleep(1)
+        
+    
+    try:
+        search = driver.find_element_by_xpath("//div[@class='modal-content']//div[@id='DataTables_Table_2_filter']//label//input")
+    except:
+        time.sleep(2)
 
-    search = driver.find_element_by_xpath("//div[@id='DataTables_Table_2_filter']//label//input")
+        cancel_button = driver.find_element_by_xpath("//div[@class='modal-content']//div[@class='margiv-top-10']//button[@class='btn default ng-binding']")
+        driver.execute_script("arguments[0].click();", cancel_button)
 
 
-    search.send_keys(lastuser)
+        driver.get("https://10.211.55.3:30443/#/edit_group_visitors")
 
-    time.sleep(1)
+        time.sleep(1)
 
+        addGroud(get_current_number)
 
-    checkbox = driver.find_element_by_xpath("//tbody[1]/tr[1]/td[6]//label//input")
-    driver.execute_script("arguments[0].click();", checkbox)
+    print(users)
+
+    for user in users:
+        search.send_keys(user)
+
+        time.sleep(1)
+
+        try:
+            checkbox = driver.find_element_by_xpath("//tbody[1]/tr[1]/td[6]//label//input")
+            driver.execute_script("arguments[0].click();", checkbox)
+        except:
+            print("Checkbox not found")
+        search.clear()
 
     add_btn = driver.find_element_by_xpath("//div[@class='modal-content']//div[@class='margiv-top-10']//button[@class='btn green ng-binding']")
     driver.execute_script("arguments[0].click();", add_btn)
@@ -72,19 +102,13 @@ def addGroud(lastuser):
 
 
 
-    # select = Select(driver.find_element_by_name('DataTables_Table_2_length'))
-    # select.select_by_value('10000')
-
-    # order_byname = driver.find_element_by_xpath("//thead/tr/th[1]")
-    # driver.execute_script("arguments[0].click();", order_byname)
-
-    # driver.execute_script("arguments[0].click();", add_user)
-
 
 
 
 
 def addUser():
+
+    global LIST_ADDED_USER
     driver.get("https://10.211.55.3:30443/#/list_visitor")
     time.sleep(1)
     
@@ -98,8 +122,11 @@ def addUser():
     time.sleep(1)
     get_lastuser = driver.find_element_by_xpath("//tbody[1]/tr[1]/td[2]")
 
-    last_user_number = str(int(get_lastuser.text) + 1)
+    try:
 
+        last_user_number = str(int(get_lastuser.text) + 1)
+    except:
+        last_user_number = "1000"
     #Criando novo usuario
 
     btn_new = driver.find_element_by_id("btn_add_visitor").click()
@@ -124,17 +151,34 @@ def addUser():
     generate_qr_code = driver.find_element_by_id("btn_create_qrcode")
     driver.execute_script("arguments[0].click();", generate_qr_code)
 
+    time.sleep(2)
+
     save = driver.find_element_by_id("btn_save")
     driver.execute_script("arguments[0].click();", save)
 
+    LIST_ADDED_USER.append(last_user_number)
+
     time.sleep(1)
-    addGroud(last_user_number)
 
 
 def main():
     logIn()
 
+    # for i in range(5):
+    #     addUser()
+    #     time.sleep(1)
+
+    # time.sleep(1)
+
+    # driver.refresh()
+    # time.sleep(1)
+
+    # addGroud(LIST_ADDED_USER)
+    # time.sleep(1)
+
     addUser()
+
+
 
 
 
