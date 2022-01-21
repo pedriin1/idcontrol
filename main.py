@@ -77,6 +77,12 @@ def getLastUser():
     driver.get(f"{LINK}/list_visitor")
     time.sleep(1)
 
+    try:
+        get_firstuser = driver.find_element_by_xpath("//tbody[1]/tr[1]/td[2]")
+        get_firstuser = get_firstuser.text
+    except:
+        get_firstuser = 0
+   
     select = Select(driver.find_element_by_name('datatablevisitor_length'))
     select.select_by_value('10000')
 
@@ -91,7 +97,7 @@ def getLastUser():
     except:
         last_user_number = 1000
 
-    return last_user_number
+    return last_user_number, int(get_firstuser) 
 
 
 
@@ -140,10 +146,29 @@ def addUser(last_user):
 
 
 def addUserContainer(times):
-    last_user = getLastUser()
+    last_user, first_user = getLastUser()
 
-    for i in range(times):
-        addUser(str(last_user + i))
+    times_arr = []
+ 
+    if first_user != 1000:
+        for i in range(times):
+            if i+1000 < first_user:
+                times_arr.append(1000 + i)
+            else:
+                times_arr.append(i+last_user)
+
+
+    else:
+        for i in range(times):
+            times_arr.append(i+last_user)
+
+
+
+
+    print(last_user)
+    print(first_user)
+    for i in times_arr:
+        addUser(str(i))
         time.sleep(1)
 
 
