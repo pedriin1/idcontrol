@@ -7,7 +7,7 @@ import time
 
 
 
-LINK = "https://10.211.55.3:30443/#"
+LINK = "https://localhost:30443/#"
 
 driver = webdriver.Chrome(ChromeDriverManager().install())
 driver.get(f"{LINK}/login")
@@ -27,7 +27,7 @@ def logIn():
 
 
                 user.send_keys("admin")
-                pas.send_keys("admin")
+                pas.send_keys("1")
 
 
                 driver.find_element_by_id("entrar").click()
@@ -97,7 +97,7 @@ def getLastUser():
     except:
         last_user_number = 1000
 
-    return last_user_number, int(get_firstuser) 
+    return last_user_number, int(get_firstuser or 0) 
 
 
 
@@ -132,6 +132,13 @@ def addUser(last_user):
     generate_qr_code = driver.find_element_by_id("btn_create_qrcode")
     driver.execute_script("arguments[0].click();", generate_qr_code)
 
+
+    print_qrcode = driver.find_element_by_id("btn_printqrcode")
+    driver.execute_script("arguments[0].click();", print_qrcode)
+
+
+
+
     time.sleep(2)
 
     #Salvando o usuario
@@ -147,7 +154,6 @@ def addUser(last_user):
 
 def addUserContainer(times):
     last_user, first_user = getLastUser()
-
     times_arr = []
  
     if first_user != 1000:
@@ -157,18 +163,18 @@ def addUserContainer(times):
             else:
                 times_arr.append(i+last_user)
 
-
     else:
         for i in range(times):
             times_arr.append(i+last_user)
 
-
-
-
     print(last_user)
     print(first_user)
     for i in times_arr:
-        addUser(str(i))
+        try:
+            addUser(str(i))
+        except:
+            time.sleep(5)
+            addUser(str(i))
         time.sleep(1)
 
 
