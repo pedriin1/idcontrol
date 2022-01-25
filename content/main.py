@@ -7,8 +7,15 @@ import time
 
 import json
 
-with open("../config.json") as f:
-    config = json.load(f)
+import os
+
+current_dir = os.getcwd()
+
+
+
+f = open(f'{current_dir}/content/config.json')
+config = json.load(f)
+f.close()
 
 
 

@@ -1,1 +1,1 @@
-python ./content/main.py
+python /content/main.py
