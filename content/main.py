@@ -95,8 +95,13 @@ def addUser(last_user):
     driver.execute_script("arguments[0].click();", add_info_btn)
 
 
+    time.sleep(1)
     select = Select(driver.find_element_by_xpath("//div[@class='modal-content']//select"))
+    time.sleep(1)
+
     select.select_by_value("number:1")
+    time.sleep(1)
+
     driver.find_element_by_xpath("//div[@class='modal-content']//button[@id='btn_save']").click()
 
 
