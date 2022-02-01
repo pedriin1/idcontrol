@@ -10,11 +10,16 @@ import json
 import os
 
 
-current_dir = os.getcwd()
 
-f = open(f'{current_dir}/content/config.json')
-config = json.load(f)
-f.close()
+config = {
+  "ip_address": "https://localhost:30443/#",
+  "qnt_docs": 10,
+  "group_visitor_id": 1001,
+  "user": "admin",
+  "password": "admin"
+}
+
+
 
 
 

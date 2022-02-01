@@ -4,7 +4,7 @@
 block_cipher = None
 
 
-a = Analysis(['content/gerar_user.py'],
+a = Analysis(['content\\gerar_user.py'],
              pathex=[],
              binaries=[],
              datas=[],
@@ -42,7 +42,3 @@ coll = COLLECT(exe,
                upx=True,
                upx_exclude=[],
                name='gerar_user')
-app = BUNDLE(coll,
-             name='gerar_user.app',
-             icon=None,
-             bundle_identifier=None)
