@@ -103,7 +103,7 @@ def addUser(last_user):
     select.select_by_value("number:1")
     time.sleep(2)
 
-    driver.find_element_by_xpath("//div[@class='modal-content']//button[@id='btn_save']")
+    driver.find_element_by_xpath("//div[@class='modal-content']//button[@id='btn_save']").click()
     time.sleep(2)
 
 
