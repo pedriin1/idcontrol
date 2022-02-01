@@ -94,7 +94,8 @@ def addUser(last_user):
 
 
 
-    driver.find_element_by_xpath("//div[@class='portlet-title']//div[@class='actions']//a").click()
+    add_info_btn = driver.find_element_by_xpath("//div[@class='portlet-title']//div[@class='actions']//a")
+    driver.execute_script("arguments[0].click();", add_info_btn)
 
 
     # Indo até a pagina de QR Code e gerando
