@@ -91,33 +91,26 @@ def addUser(last_user):
 
     additional_info = driver.find_element_by_xpath("//li[@id='additional'][2]//a")
     driver.execute_script("arguments[0].click();", additional_info)
-
-
-
     add_info_btn = driver.find_element_by_xpath("//div[@class='portlet-title']//div[@class='actions']//a")
     driver.execute_script("arguments[0].click();", add_info_btn)
 
 
     select = Select(driver.find_element_by_xpath("//div[@class='modal-content']//select"))
-
     select.select_by_value("number:1")
-    time.sleep(2)
-
     driver.find_element_by_xpath("//div[@class='modal-content']//button[@id='btn_save']").click()
-    time.sleep(2)
 
 
 
     # Indo até a pagina de QR Code e gerando
-    # qr_code = driver.find_element_by_xpath("//li[@id='additional']//a")
-    # driver.execute_script("arguments[0].click();", qr_code)
+    qr_code = driver.find_element_by_xpath("//li[@id='additional']//a")
+    driver.execute_script("arguments[0].click();", qr_code)
 
-    # generate_qr_code = driver.find_element_by_id("btn_create_qrcode")
-    # driver.execute_script("arguments[0].click();", generate_qr_code)
+    generate_qr_code = driver.find_element_by_id("btn_create_qrcode")
+    driver.execute_script("arguments[0].click();", generate_qr_code)
 
 
-    # print_qrcode = driver.find_element_by_id("btn_printqrcode")
-    # driver.execute_script("arguments[0].click();", print_qrcode)
+    print_qrcode = driver.find_element_by_id("btn_printqrcode")
+    driver.execute_script("arguments[0].click();", print_qrcode)
 
 
 
@@ -125,8 +118,8 @@ def addUser(last_user):
     time.sleep(2)
 
     #Salvando o usuario
-    # save = driver.find_element_by_id("btn_save")
-    # driver.execute_script("arguments[0].click();", save)
+    save = driver.find_element_by_id("btn_save")
+    driver.execute_script("arguments[0].click();", save)
 
     LIST_ADDED_USER.append(last_user)
 
