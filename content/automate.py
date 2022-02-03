@@ -5,10 +5,6 @@ from pyautogui import typewrite
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 
-import json
-
-import os
-
 
 
 config = {
@@ -18,8 +14,6 @@ config = {
   "user": "admin",
   "password": "admin"
 }
-
-
 
 
 
@@ -43,13 +37,45 @@ def logIn(driver):
                 driver.find_element_by_id("entrar").click()
                 time.sleep(1)
 
-
-
                 break
             except:
                 pass
 
 
+
+def addGroup(driver, user):
+    driver.refresh()
+    driver.get(f"{LINK}/list_groups_visitors")
+
+    time.sleep(2)
+
+
+    driver.get(f"{LINK}/edit_group_visitors/1001")
+    time.sleep(1)
+
+    visitors_btn = driver.find_element_by_xpath("//li//a[@name='departiments_tab_users']")
+    driver.execute_script("arguments[0].click();", visitors_btn)
+
+    time.sleep(1)
+    driver.find_element_by_xpath("//div[@class='portlet-title']//div[@class='actions']//a").click()
+    time.sleep(1)
+
+    search = driver.find_element_by_xpath("//div[@class='modal-content']//input")
+    search.send_keys(user)
+
+    try:
+        driver.find_element_by_xpath("//tbody/tr[1]/td[6]").click()
+        time.sleep(2)
+        driver.find_element_by_xpath("//span[@id='select_all']//a").click()
+    except:
+        pass
+        
+   
+    add_btn = driver.find_element_by_xpath("//div[@class='modal-content']//div[@class='margiv-top-10']//button[@class='btn green ng-binding']")
+    driver.execute_script("arguments[0].click();", add_btn)
+
+    save_btn = driver.find_element_by_xpath("//div[@class='margiv-top-10']//button[@class='btn green ng-binding']")
+    driver.execute_script("arguments[0].click();", save_btn)
 
 
 
@@ -119,6 +145,8 @@ def addUser(last_user, driver):
 
     LIST_ADDED_USER.append(last_user)
 
+
+    addGroup(driver, last_user)
     time.sleep(1)
 
 
@@ -137,10 +165,6 @@ def addUserContainer(times, start, driver):
 
 
 def initialize(qnt_docs, start):
-
-
-
-    
 
     driver = webdriver.Chrome(ChromeDriverManager().install())
     driver.get(f"{LINK}/login")
