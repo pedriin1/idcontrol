@@ -51,7 +51,15 @@ imprimir.pack(padx=10)
 def handle_click(event):
     print(qnt_entry.get())
 
-    initialize(qnt_entry.get(), starter_entry.get())
+    initialize(qnt_entry.get(), starter_entry.get(), 0)
+
+
+def handle_click_banho(event):
+    initialize(qnt_entry.get(), starter_entry.get(), 1)
+    pass
+
+
+imprimir_banheiro.bind("<Button-1>", handle_click_banho)
 
 
 start_btn.bind("<Button-1>", handle_click)

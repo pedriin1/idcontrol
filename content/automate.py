@@ -11,8 +11,9 @@ config = {
   "ip_address": "https://localhost:30443/#",
   "qnt_docs": 10,
   "group_visitor_id": 1001,
-  "user": "admin",
-  "password": "admin"
+  "group_visitor_id_banho": 1003,
+  "user": "Admin",
+  "password": "ti@3232"
 }
 
 
@@ -43,14 +44,18 @@ def logIn(driver):
 
 
 
-def addGroup(driver, user):
+def addGroup(driver, user, type):
     driver.refresh()
     driver.get(f"{LINK}/list_groups_visitors")
 
     time.sleep(2)
 
+    if type == 0:
+        driver.get(f"{LINK}/edit_group_visitors/{config['group_visitor_id']}")
+    else:
+        driver.get(f"{LINK}/edit_group_visitors/{config['group_visitor_id_banho']}")
 
-    driver.get(f"{LINK}/edit_group_visitors/1001")
+
     time.sleep(1)
 
     visitors_btn = driver.find_element_by_xpath("//li//a[@name='departiments_tab_users']")
@@ -79,7 +84,7 @@ def addGroup(driver, user):
 
 
 
-def addUser(last_user, driver):
+def addUser(last_user, driver, type):
 
     global LIST_ADDED_USER
     #Entrando na pagina para criar o user
@@ -95,7 +100,11 @@ def addUser(last_user, driver):
 
     #Digitando o nome da usuario
     name_input = driver.find_element_by_xpath("//div[@class='row form-group']//input[@id='name']")
-    name_input.send_keys(last_user)
+    if type == 0:
+        name_input.send_keys(last_user)
+    else:
+        name_input.send_keys(f"Banho {str(last_user)}")
+
 
     #Digitando a data de expiração
     driver.find_element_by_id("visitor_datelimit").clear()
@@ -145,26 +154,30 @@ def addUser(last_user, driver):
 
     LIST_ADDED_USER.append(last_user)
 
+    if type == 0:
 
-    addGroup(driver, last_user)
+        addGroup(driver, last_user)
+    else:
+        addGroup(driver, f"Banho {str(last_user)}", type)
     time.sleep(1)
 
 
 
 
-def addUserContainer(times, start, driver):
+def addUserContainer(times, start, driver, type):
    
     for i in range(times):
         try:
-            addUser(str(start + i), driver)
+            addUser(str(start + i), driver, type)
         except:
             time.sleep(5)
-            addUser(str(start + i), driver)
+            addUser(str(start + i), driver, type)
         time.sleep(1)
 
 
-
-def initialize(qnt_docs, start):
+# type 0 == normal
+# type 1 == banho
+def initialize(qnt_docs, start, type):
 
     driver = webdriver.Chrome(ChromeDriverManager().install())
     driver.get(f"{LINK}/login")
@@ -173,7 +186,8 @@ def initialize(qnt_docs, start):
     logIn(driver)
     t1 = time.time()
     
-    addUserContainer(int(qnt_docs), int(start), driver=driver)
+    addUserContainer(int(qnt_docs), int(start),
+    driver, type)
     t2 = time.time()
     print(t2-t1)
 
