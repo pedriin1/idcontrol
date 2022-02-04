@@ -156,7 +156,7 @@ def addUser(last_user, driver, type):
 
     if type == 0:
 
-        addGroup(driver, last_user)
+        addGroup(driver, last_user, type)
     else:
         addGroup(driver, f"Banho {str(last_user)}", type)
     time.sleep(1)
