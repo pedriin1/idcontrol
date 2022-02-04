@@ -67,6 +67,8 @@ def addGroup(driver, user, type):
 
     search = driver.find_element_by_xpath("//div[@class='modal-content']//input")
     search.send_keys(user)
+    time.sleep(1)
+
 
     try:
         driver.find_element_by_xpath("//tbody/tr[1]/td[6]").click()
@@ -74,7 +76,9 @@ def addGroup(driver, user, type):
         driver.find_element_by_xpath("//span[@id='select_all']//a").click()
     except:
         pass
-        
+    
+    time.sleep(1)
+
    
     add_btn = driver.find_element_by_xpath("//div[@class='modal-content']//div[@class='margiv-top-10']//button[@class='btn green ng-binding']")
     driver.execute_script("arguments[0].click();", add_btn)
