@@ -43,10 +43,16 @@ def logIn(driver):
                 pass
 
 
+def workflow(driver):
+    driver.get(f"{LINK}/list_visitor")
+    search_input = driver.find_element_by_xpath("//div[@id='datatablevisitor_filter']//label//input")
+    search_input.send_keys("1000")
+
 if __name__ == "__main__":
     driver = webdriver.Chrome(ChromeDriverManager().install())
     driver.get(f"{LINK}/login")
     typewrite("thisisunsafe")
 
     logIn(driver)
+    time.sleep(1)
     
