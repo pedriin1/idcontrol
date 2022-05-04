@@ -55,4 +55,5 @@ if __name__ == "__main__":
 
     logIn(driver)
     time.sleep(1)
+    workflow(driver)
     
