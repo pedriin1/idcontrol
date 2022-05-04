@@ -44,4 +44,9 @@ def logIn(driver):
 
 
 if __name__ == "__main__":
-    logIn()
+    driver = webdriver.Chrome(ChromeDriverManager().install())
+    driver.get(f"{LINK}/login")
+    typewrite("thisisunsafe")
+
+    logIn(driver)
+    
