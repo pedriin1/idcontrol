@@ -47,14 +47,19 @@ def workflow(driver):
     driver.get(f"{LINK}/list_visitor")
     time.sleep(1)
     search_input = driver.find_element_by_xpath("//div[@id='datatablevisitor_filter']//label//input")
-    search_input.send_keys("1000")
+    
+    number = "1000"
+    search_input.send_keys(number)
 
     time.sleep(1)
 
-    table_rows = driver.find_elements_by_tag_name("tr")
-    print(table_rows)
-    for i in table_rows:
-        print(i)
+    table_rows = driver.find_elements_by_tag_name("//tbody//tr")
+    print(len(table_rows))
+
+    for i in range(len(table_rows)):
+        if driver.find_element_by_xpath(f"//tbody//tr[{i}]//td[0]").text == number:
+            print("number achado")
+            
 
 
 
