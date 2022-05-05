@@ -53,7 +53,7 @@ def workflow(driver):
 
     time.sleep(1)
 
-    table_rows = driver.find_element_by_xpath("//tbody//tr")
+    table_rows = driver.find_elements_by_xpath("//tbody//tr")
     print(len(table_rows))
 
     for i in range(len(table_rows)):
