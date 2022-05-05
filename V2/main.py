@@ -49,7 +49,9 @@ def workflow(driver):
     search_input = driver.find_element_by_xpath("//div[@id='datatablevisitor_filter']//label//input")
     search_input.send_keys("1000")
 
-    table_rows = driver.find_element_by_xpath("//tbody")
+    time.sleep(1)
+
+    table_rows = driver.find_elements_by_tag_name("tr")
     print(table_rows)
     for i in table_rows:
         print(i)
