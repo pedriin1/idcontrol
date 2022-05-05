@@ -45,8 +45,16 @@ def logIn(driver):
 
 def workflow(driver):
     driver.get(f"{LINK}/list_visitor")
+    time.sleep(1)
     search_input = driver.find_element_by_xpath("//div[@id='datatablevisitor_filter']//label//input")
     search_input.send_keys("1000")
+
+    table_rows = driver.find_element_by_xpath("//tbody")
+    print(table_rows)
+    for i in table_rows:
+        print(i)
+
+
 
 if __name__ == "__main__":
     driver = webdriver.Chrome(ChromeDriverManager().install())
