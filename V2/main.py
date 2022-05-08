@@ -57,9 +57,24 @@ def workflow(driver):
     print(len(table_rows))
 
     for i in range(len(table_rows)):
-        if driver.find_element_by_xpath(f"//tbody//tr[{i}]//td[0]").text == number:
-            print("number achado")
-            
+        if i > 0:
+            if driver.find_element_by_xpath(f"//tbody//tr[{i}]//td[2]").text == number:
+                driver.find_element_by_xpath(f"//tbody//tr[{i}]//td[7]").click()
+                print("Número encontrado")
+                 # Indo até a pagina de QR Code e gerando
+                qr_code = driver.find_element_by_xpath("//li[@id='additional']//a")
+                driver.execute_script("arguments[0].click();", qr_code)
+
+                generate_qr_code = driver.find_element_by_id("btn_create_qrcode")
+                driver.execute_script("arguments[0].click();", generate_qr_code)
+
+
+                print_qrcode = driver.find_element_by_id("btn_printqrcode")
+                driver.execute_script("arguments[0].click();", print_qrcode)
+
+                time.sleep(2)
+            else:
+                print("Número não encontrado")            
 
 
 
