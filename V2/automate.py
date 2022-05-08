@@ -86,7 +86,7 @@ def workflow(driver, start, qnt_docs):
 
 
 
-def initialize(qnt_docs, start):
+def initialize(qnt_docs, start, type):
 
     driver = webdriver.Chrome(ChromeDriverManager().install())
     driver.get(f"{LINK}/login")
