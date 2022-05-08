@@ -48,7 +48,7 @@ def workflow(driver, start, qnt_docs):
     num_start = int(start)
     qnt_docs = int(qnt_docs)
 
-    for i in range(num_start, qnt_docs):
+    for i in range(num_start, qnt_docs + num_start ):
         driver.get(f"{LINK}/list_visitor")
         time.sleep(1)
         search_input = driver.find_element_by_xpath("//div[@id='datatablevisitor_filter']//label//input")
@@ -79,9 +79,11 @@ def workflow(driver, start, qnt_docs):
                     driver.execute_script("arguments[0].click();", print_qrcode)
 
                     time.sleep(2)
-                else:
-                    print("Número não encontrado")
-                    break          
+
+                    driver.find_element_by_css_selector("bootbox-close-button close").click()
+                    
+                    break
+                        
 
 
 
