@@ -80,7 +80,7 @@ def workflow(driver, start, qnt_docs):
 
                     time.sleep(2)
 
-                    driver.find_element_by_css_selector("bootbox-close-button close").click()
+                    driver.find_element_by_xpath("//div[@class='modal-footer']//button").click()
                     
                     break
                         
