@@ -51,7 +51,7 @@ imprimir.pack(padx=10)
 def handle_click(event):
     print(qnt_entry.get())
 
-    initialize(qnt_entry.get(), starter_entry.get(),0 )
+    initialize(qnt_entry.get(),  starter_entry.get(),0 )
 
 
 def handle_click_banho(event):
