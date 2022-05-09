@@ -50,40 +50,46 @@ def workflow(driver, start, qnt_docs):
 
     for i in range(num_start, qnt_docs + num_start ):
         driver.get(f"{LINK}/list_visitor")
-        time.sleep(1)
-        search_input = driver.find_element_by_xpath("//div[@id='datatablevisitor_filter']//label//input")
-        
-        number = str(i)
-        search_input.send_keys(number)
+        try:
+            time.sleep(1)
+            search_input = driver.find_element_by_xpath("//div[@id='datatablevisitor_filter']//label//input")
+            
+            number = str(i)
+            search_input.send_keys(number)
 
-        time.sleep(1)
+            time.sleep(1)
 
-        table_rows = driver.find_elements_by_xpath("//tbody//tr")
+            table_rows = driver.find_elements_by_xpath("//tbody//tr")
 
-        for i in range(len(table_rows)):
-            if i > 0:
-                if driver.find_element_by_xpath(f"//tbody//tr[{i}]//td[2]").text == number:
-                    driver.find_element_by_xpath(f"//tbody//tr[{i}]//td[7]").click()
-                    print("Número encontrado")
-                    time.sleep(2)
-                    # Indo até a pagina de QR Code e gerando
-                    
-                    qr_code = driver.find_element_by_xpath("//li[@id='additional']//a")
-                    driver.execute_script("arguments[0].click();", qr_code)
-
-                    generate_qr_code = driver.find_element_by_id("btn_create_qrcode")
-                    driver.execute_script("arguments[0].click();", generate_qr_code)
-
-
-                    print_qrcode = driver.find_element_by_id("btn_printqrcode")
-                    driver.execute_script("arguments[0].click();", print_qrcode)
-
-                    time.sleep(2)
-
-                    driver.find_element_by_xpath("//div[@class='modal-footer']//button").click()
-                    
-                    break
+            for i in range(len(table_rows)):
+                if i > 0:
+                    if driver.find_element_by_xpath(f"//tbody//tr[{i}]//td[2]").text == number:
+                        driver.find_element_by_xpath(f"//tbody//tr[{i}]//td[7]").click()
+                        print("Número encontrado")
+                        time.sleep(2)
+                        # Indo até a pagina de QR Code e gerando
                         
+                        qr_code = driver.find_element_by_xpath("//li[@id='additional']//a")
+                        driver.execute_script("arguments[0].click();", qr_code)
+
+                        generate_qr_code = driver.find_element_by_id("btn_create_qrcode")
+                        driver.execute_script("arguments[0].click();", generate_qr_code)
+
+
+                        print_qrcode = driver.find_element_by_id("btn_printqrcode")
+                        driver.execute_script("arguments[0].click();", print_qrcode)
+
+                        time.sleep(2)
+
+                        driver.find_element_by_xpath("//div[@class='modal-footer']//button").click()
+                        
+                        break
+        except:
+            try:
+                driver.find_element_by_xpath("//div[@class='modal-footer']//button").click()
+            except:
+                pass
+            time.sleep(1)
 
 
 
